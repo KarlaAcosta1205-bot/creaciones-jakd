@@ -1,0 +1,84 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Usuario {
+  id        String   @id @default(uuid())
+  username  String   @unique
+  password  String
+  nombre    String
+  createdAt DateTime @default(now())
+
+  @@map("usuarios")
+}
+
+model Producto {
+  id          String   @id @default(uuid())
+  nombre      String
+  categoria   String
+  talla       String?
+  precio      Decimal  @db.Decimal(10, 2)
+  cantidad    Int      @default(0)
+  stockMinimo Int      @default(5)
+  fechaIngreso DateTime @default(now())
+  activo      Boolean  @default(true)
+
+  @@map("productos")
+}
+
+model Arreglo {
+  id          String   @id @default(uuid())
+  cliente     String
+  tipoArreglo String
+  valor       Decimal  @db.Decimal(10, 2)
+  estado      String   @default("PENDIENTE")
+  fecha       DateTime @default(now())
+  descripcion String?
+
+  @@map("arreglos")
+}
+
+model Cliente {
+  id          String   @id @default(uuid())
+  nombre      String
+  telefono    String?
+  email       String?
+  direccion   String?
+  createdAt   DateTime @default(now())
+
+  deudas      Deuda[]
+  
+  @@map("clientes")
+}
+
+model Deuda {
+  id          String   @id @default(uuid())
+  clienteId   String
+  montoTotal  Decimal  @db.Decimal(10, 2)
+  montoPagado Decimal  @default(0) @db.Decimal(10, 2)
+  estado      String   @default("PENDIENTE")
+  fecha       DateTime @default(now())
+  descripcion String?
+
+  cliente     Cliente  @relation(fields: [clienteId], references: [id])
+  pagos       Pago[]
+
+  @@map("deudas")
+}
+
+model Pago {
+  id          String   @id @default(uuid())
+  deudaId     String
+  monto       Decimal  @db.Decimal(10, 2)
+  fecha       DateTime @default(now())
+  metodo      String   @default("EFECTIVO")
+
+  deuda       Deuda    @relation(fields: [deudaId], references: [id])
+
+  @@map("pagos")
+}
