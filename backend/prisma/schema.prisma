@@ -25,6 +25,7 @@ model Producto {
   precio      Decimal  @db.Decimal(10, 2)
   cantidad    Int      @default(0)
   stockMinimo Int      @default(5)
+  estado      String   @default("DISPONIBLE") // DISPONIBLE, VENDIDO
   fechaIngreso DateTime @default(now())
   activo      Boolean  @default(true)
 

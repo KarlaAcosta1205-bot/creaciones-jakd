@@ -1,0 +1,2 @@
+-- AlterTable
+ALTER TABLE "productos" ADD COLUMN     "estado" TEXT NOT NULL DEFAULT 'DISPONIBLE';
