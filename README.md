@@ -1,7 +1,3 @@
-👩‍💻 Desarrolladora
-Aleja 
-Sound Engineering student & Full Stack Developer
-
 # 🧵 Creaciones JAKD — Sistema Administrativo
 
 Sistema web completo para la gestión de negocios de costura. Desarrollado con **React + Node.js + PostgreSQL + Prisma**.
@@ -75,6 +71,5 @@ npm install
 npm start
 
 👩‍💻 Desarrolladora
-Aleja — @pureset
+Karla Acosta — @pureset
 Sound Engineering student & Full Stack Developer
-
