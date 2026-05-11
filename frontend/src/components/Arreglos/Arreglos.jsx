@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Scissors, Plus, Search, Pencil, Trash2, DollarSign, X, CheckCircle } from 'lucide-react';
+import { Scissors, Plus, Search, Pencil, Trash2, DollarSign, X } from 'lucide-react';
 import { api } from '../../utils/api';
 
 export default function Arreglos() {
