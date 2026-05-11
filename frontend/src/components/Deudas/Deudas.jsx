@@ -157,11 +157,14 @@ export default function Deudas() {
                       {formatMoney(saldo)}
                     </td>
                     <td>
-                      {d.estado === 'PENDIENTE' ? (
-                        <span className="badge badge-warning">Pendiente</span>
-                      ) : (
-                        <span className="badge badge-success">Pagada</span>
-                      )}
+                      {saldo <= 0 ? (
+                            <span className="badge badge-success">Pagada</span>
+                        ) : saldo < Number(d.montoTotal) ? (
+                            <span className="badge badge-warning">Parcial</span>
+                        ) : (
+                            <span className="badge badge-warning">Pendiente</span>
+                        )}
+                        
                     </td>
                     <td>
                       <div className="actions" style={{ justifyContent: 'flex-end' }}>
@@ -252,7 +255,7 @@ export default function Deudas() {
               <div className="form-grid">
                 <div className="form-group">
                   <label>Monto a pagar ($)</label>
-                  <input type="number" required min="1" max={getSaldo(pagoModal)} step="100" value={pagoForm.monto} onChange={(e) => setPagoForm({ ...pagoForm, monto: e.target.value })} />
+                  <input type="number" required min="1" max={getSaldo(pagoModal)} step="1" value={pagoForm.monto} onChange={(e) => setPagoForm({ ...pagoForm, monto: e.target.value })} />
                 </div>
 
                 <div className="form-group">

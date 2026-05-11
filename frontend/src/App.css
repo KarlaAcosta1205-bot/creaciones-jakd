@@ -93,6 +93,10 @@ tbody tr:last-child td {
   background: rgba(255, 193, 7, 0.2);
   color: #856404;
 }
+.badge-info {
+  background: rgba(13, 115, 119, 0.15);
+  color: #0D7377;
+}
 
 .badge-danger {
   background: rgba(220, 53, 69, 0.15);

@@ -1,5 +1,5 @@
 👩‍💻 Desarrolladora
-Karla Acosta
+Aleja 
 Sound Engineering student & Full Stack Developer
 
 # 🧵 Creaciones JAKD — Sistema Administrativo
@@ -74,5 +74,7 @@ cd ../frontend
 npm install
 npm start
 
-
+👩‍💻 Desarrolladora
+Aleja — @pureset
+Sound Engineering student & Full Stack Developer
 
