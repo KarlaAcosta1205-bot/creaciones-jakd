@@ -23,18 +23,21 @@ export default function Dashboard() {
           api.get('/deudas'),
         ]);
 
-        const arreglosPendientes = arreglos?.filter?.(a => !a.pagado)?.length || 0;
-        const deudasActivas = deudas?.filter?.(d => d.saldo > 0)?.length || 0;
-        const ingresosMes = arreglos
-          ?.filter?.(a => a.pagado)
-          ?.reduce?.((sum, a) => sum + (a.precio || 0), 0) || 0;
+        const disponibles = productos?.filter?.(p => p.estado === 'DISPONIBLE')?.length || 0;
+        const pendientes = arreglos?.filter?.(a => a.estado === 'PENDIENTE')?.length || 0;
+        const deudasPendientes = deudas?.filter?.(d => d.estado === 'PENDIENTE')?.length || 0;
+
+        // Ingresos de arreglos completados (no pendientes)
+        const ingresos = arreglos
+          ?.filter?.(a => a.estado !== 'PENDIENTE')
+          ?.reduce?.((sum, a) => sum + (Number(a.valor) || 0), 0) || 0;
 
         setStats({
-          productos: productos?.length || 0,
-          arreglosPendientes,
+          productos: disponibles,
+          arreglosPendientes: pendientes,
           clientes: clientes?.length || 0,
-          deudasActivas,
-          ingresosMes,
+          deudasActivas: deudasPendientes,
+          ingresosMes: ingresos,
         });
       } catch (err) {
         console.error('Error cargando stats:', err);
@@ -55,7 +58,7 @@ export default function Dashboard() {
   };
 
   const cards = [
-    { icon: Package, label: 'Productos en inventario', value: stats.productos, color: 'products' },
+    { icon: Package, label: 'Productos disponibles', value: stats.productos, color: 'products' },
     { icon: Scissors, label: 'Arreglos pendientes', value: stats.arreglosPendientes, color: 'repairs' },
     { icon: Users, label: 'Clientes registrados', value: stats.clientes, color: 'clients' },
     { icon: CreditCard, label: 'Deudas activas', value: stats.deudasActivas, color: 'debts' },
@@ -73,7 +76,7 @@ export default function Dashboard() {
         {cards.map((card, i) => {
           const Icon = card.icon;
           return (
-            <div key={i} className="stat-card" style={{ animationDelay: `${i * 0.1}s` }}>
+            <div key={i} className="stat-card">
               <div className={`stat-icon ${card.color}`}>
                 <Icon size={22} />
               </div>
