@@ -4,6 +4,7 @@ require('dotenv').config();
 
 const authRoutes = require('./routes/auth');
 const productoRoutes = require('./routes/productos');
+const arregloRoutes = require('./routes/arreglos');
 
 const app = express();
 
@@ -12,6 +13,7 @@ app.use(express.json());
 
 app.use('/api/auth', authRoutes);
 app.use('/api/productos', productoRoutes);
+app.use('/api/arreglos', arregloRoutes);
 
 app.get('/', (req, res) => {
   res.json({ message: 'Creaciones JAKD API funcionando 🧵' });
