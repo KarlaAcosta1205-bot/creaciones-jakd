@@ -26,13 +26,15 @@ export const api = {
       return;
     }
 
-    const data = await response.json().catch(() => null);
+    const result = await response.json().catch(() => null);
     
-    if (!response.ok) {
-      throw new Error(data?.error || `Error ${response.status}`);
+    // Tu backend envuelve todo en { success, data } o { success, error }
+    if (!response.ok || result?.success === false) {
+      throw new Error(result?.error || result?.data?.error || `Error ${response.status}`);
     }
 
-    return data;
+    // Devolvemos directamente el contenido de "data"
+    return result?.data ?? result;
   },
 
   get(endpoint) {
