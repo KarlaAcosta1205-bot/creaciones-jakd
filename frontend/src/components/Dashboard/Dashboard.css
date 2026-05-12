@@ -1,93 +1,375 @@
+/* ============================================
+   DASHBOARD JAKD - Profesional & Responsive
+   ============================================ */
+
+.dashboard-page {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* Header con branding */
+.dashboard-header {
+  margin-bottom: 28px;
+}
+
+.brand-showcase {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 20px;
+  padding: 24px;
+  background: linear-gradient(135deg, #0D7377 0%, #14FFEC 100%);
+  border-radius: 16px;
+  color: white;
+  box-shadow: 0 8px 30px rgba(13, 115, 119, 0.25);
+}
+
+.brand-logo-large {
+  width: 64px;
+  height: 64px;
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(10px);
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+}
+
+.brand-text-large h1 {
+  font-size: 1.6rem;
+  font-weight: 800;
+  letter-spacing: 1px;
+  margin: 0;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.brand-text-large p {
+  font-size: 0.95rem;
+  opacity: 0.9;
+  margin: 2px 0 0;
+  font-weight: 500;
+}
+
+.welcome-text h2 {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: #1A1A1A;
+  margin-bottom: 4px;
+}
+
+.welcome-text p {
+  color: #666;
+  font-size: 0.9rem;
+}
+
+/* Stats Grid */
 .stats-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  grid-template-columns: repeat(3, 1fr);
   gap: 16px;
+  margin-bottom: 24px;
 }
 
 .stat-card {
-  background: #FFFFFF;
+  background: white;
   border-radius: 16px;
   padding: 20px;
-  display: flex;
-  align-items: center;
-  gap: 14px;
-  box-shadow: 0 4px 20px rgba(13, 115, 119, 0.12);
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+  border: 1px solid rgba(0, 0, 0, 0.04);
   transition: all 0.3s ease;
-  border: 1px solid rgba(13, 115, 119, 0.06);
 }
 
 .stat-card:hover {
   transform: translateY(-3px);
-  box-shadow: 0 8px 25px rgba(13, 115, 119, 0.2);
+  box-shadow: 0 8px 25px rgba(13, 115, 119, 0.12);
 }
 
-.stat-icon {
-  width: 48px;
-  height: 48px;
+.stat-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 14px;
+}
+
+.stat-icon-bg {
+  width: 44px;
+  height: 44px;
   border-radius: 12px;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #FFFFFF;
-  flex-shrink: 0;
+  color: white;
 }
 
-.stat-icon.products { background: linear-gradient(135deg, #0D7377, #14FFEC); }
-.stat-icon.repairs { background: linear-gradient(135deg, #e74c3c, #f39c12); }
-.stat-icon.clients { background: linear-gradient(135deg, #9b59b6, #e74c3c); }
-.stat-icon.debts { background: linear-gradient(135deg, #f39c12, #f1c40f); }
+.stat-icon-bg.turquesa { background: linear-gradient(135deg, #0D7377, #14FFEC); }
+.stat-icon-bg.naranja { background: linear-gradient(135deg, #e67e22, #f39c12); }
+.stat-icon-bg.morado { background: linear-gradient(135deg, #8e44ad, #9b59b6); }
+.stat-icon-bg.amarillo { background: linear-gradient(135deg, #f39c12, #f1c40f); }
+.stat-icon-bg.verde { background: linear-gradient(135deg, #0D7377, #2ecc71); }
+.stat-icon-bg.rojo { background: linear-gradient(135deg, #e74c3c, #c0392b); }
+
+.stat-trend {
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 4px 10px;
+  border-radius: 20px;
+  background: #F5F5F5;
+  color: #666;
+}
+
+.trend-up {
+  color: #0D7377;
+  background: rgba(13, 115, 119, 0.1);
+}
+
+.trend-down {
+  color: #e74c3c;
+  background: rgba(231, 76, 60, 0.1);
+}
 
 .stat-info {
   display: flex;
   flex-direction: column;
-  min-width: 0;
 }
 
 .stat-value {
-  font-size: 1.6rem;
+  font-size: 1.7rem;
   font-weight: 800;
   color: #1A1A1A;
   line-height: 1.2;
 }
 
 .stat-label {
-  font-size: 0.8rem;
-  color: #666666;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  font-size: 0.85rem;
+  color: #888;
+  margin-top: 4px;
 }
 
-/* Celular */
+/* Sección inferior */
+.dashboard-bottom {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+.dash-card {
+  background: white;
+  border-radius: 16px;
+  padding: 20px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+  border: 1px solid rgba(0, 0, 0, 0.04);
+}
+
+.dash-card-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 16px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid #F0F0F0;
+}
+
+.dash-card-header h3 {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #1A1A1A;
+  margin: 0;
+}
+
+.dash-card-header svg {
+  color: #0D7377;
+}
+
+.dash-loading {
+  text-align: center;
+  color: #999;
+  padding: 20px;
+}
+
+.dash-empty {
+  text-align: center;
+  padding: 30px 20px;
+  color: #999;
+}
+
+.dash-empty svg {
+  margin-bottom: 10px;
+  opacity: 0.4;
+}
+
+.dash-empty p {
+  font-size: 0.9rem;
+}
+
+/* Lista de items */
+.dash-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.dash-list-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 14px;
+  background: #FAFAFA;
+  border-radius: 10px;
+  transition: all 0.2s ease;
+}
+
+.dash-list-item:hover {
+  background: #F0F0F0;
+}
+
+.dash-list-item.alert-item {
+  background: rgba(231, 76, 60, 0.04);
+  border-left: 3px solid #e74c3c;
+}
+
+.dash-item-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.dash-item-name {
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: #1A1A1A;
+}
+
+.dash-item-meta {
+  font-size: 0.8rem;
+  color: #999;
+}
+
+.dash-item-badge {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 4px;
+}
+
+.stock-alert {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: #e74c3c;
+  background: rgba(231, 76, 60, 0.1);
+  padding: 3px 10px;
+  border-radius: 20px;
+}
+
+.status-badge {
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 3px 10px;
+  border-radius: 20px;
+}
+
+.status-badge.pending {
+  background: rgba(243, 156, 18, 0.15);
+  color: #d35400;
+}
+
+.status-badge.paid {
+  background: rgba(46, 204, 113, 0.15);
+  color: #27ae60;
+}
+
+.dash-price {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: #0D7377;
+}
+
+/* ============================================
+   RESPONSIVE - CELULAR
+   ============================================ */
+
 @media (max-width: 768px) {
+  .brand-showcase {
+    padding: 18px;
+    gap: 12px;
+  }
+
+  .brand-logo-large {
+    width: 48px;
+    height: 48px;
+  }
+
+  .brand-logo-large svg {
+    width: 24px;
+    height: 24px;
+  }
+
+  .brand-text-large h1 {
+    font-size: 1.2rem;
+  }
+
+  .brand-text-large p {
+    font-size: 0.85rem;
+  }
+
+  .welcome-text h2 {
+    font-size: 1.1rem;
+  }
+
   .stats-grid {
     grid-template-columns: repeat(2, 1fr);
     gap: 12px;
   }
-  
+
   .stat-card {
     padding: 16px;
-    flex-direction: column;
-    text-align: center;
-    gap: 10px;
   }
-  
-  .stat-icon {
-    width: 44px;
-    height: 44px;
+
+  .stat-icon-bg {
+    width: 38px;
+    height: 38px;
   }
-  
+
+  .stat-icon-bg svg {
+    width: 18px;
+    height: 18px;
+  }
+
   .stat-value {
-    font-size: 1.4rem;
+    font-size: 1.3rem;
   }
-  
+
   .stat-label {
     font-size: 0.75rem;
-    white-space: normal;
+  }
+
+  .stat-trend {
+    font-size: 0.65rem;
+    padding: 3px 8px;
+  }
+
+  .dashboard-bottom {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .dash-card {
+    padding: 16px;
+  }
+
+  .dash-list-item {
+    padding: 10px 12px;
+  }
+
+  .dash-item-name {
+    font-size: 0.85rem;
+  }
+
+  .dash-item-meta {
+    font-size: 0.75rem;
   }
 }
 
-/* Celular muy pequeño */
 @media (max-width: 380px) {
   .stats-grid {
     grid-template-columns: 1fr;
