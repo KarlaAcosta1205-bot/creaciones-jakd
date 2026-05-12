@@ -96,14 +96,6 @@ export default function Dashboard() {
     }).format(val);
   };
 
-  const formatDate = (dateStr) => {
-    if (!dateStr) return '-';
-    return new Date(dateStr).toLocaleDateString('es-CO', { 
-      day: 'numeric', 
-      month: 'short'
-    });
-  };
-
   const statCards = [
     { 
       icon: Package, 
