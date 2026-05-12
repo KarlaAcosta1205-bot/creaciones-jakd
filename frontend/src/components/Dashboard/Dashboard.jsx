@@ -7,7 +7,6 @@ import {
   AlertTriangle,
   DollarSign,
   ScissorsLineDashed,
-  TrendingUp,
   Clock,
   ChevronRight
 } from 'lucide-react';
