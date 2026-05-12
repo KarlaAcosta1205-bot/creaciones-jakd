@@ -6,7 +6,10 @@ import {
   CreditCard, 
   AlertTriangle,
   DollarSign,
-  ScissorsLineDashed
+  ScissorsLineDashed,
+  TrendingUp,
+  Clock,
+  ChevronRight
 } from 'lucide-react';
 import { api } from '../../utils/api';
 import './Dashboard.css';
@@ -41,28 +44,23 @@ export default function Dashboard() {
         const mesActual = hoy.getMonth();
         const anioActual = hoy.getFullYear();
 
-        // Productos
         const disponibles = productos?.filter?.(p => p.estado === 'DISPONIBLE') || [];
         const bajoStock = disponibles.filter(p => p.cantidad <= p.stockMinimo);
         
-        // Arreglos
         const pendientes = arreglos?.filter?.(a => a.estado === 'PENDIENTE') || [];
         const arreglosDelMes = (arreglos || []).filter(a => {
           const f = new Date(a.fecha);
           return f.getMonth() === mesActual && f.getFullYear() === anioActual;
         });
         
-        // Clientes
         const clientesDelMes = (clientes || []).filter(c => {
           const f = new Date(c.createdAt);
           return f.getMonth() === mesActual && f.getFullYear() === anioActual;
         });
 
-        // Deudas
         const deudasPendientes = deudas?.filter?.(d => d.estado === 'PENDIENTE') || [];
         const totalDeuda = deudasPendientes.reduce((sum, d) => sum + (Number(d.montoTotal) - Number(d.montoPagado)), 0);
 
-        // Ingresos del mes (arreglos pagados/completados de este mes)
         const ingresos = arreglosDelMes
           .filter(a => a.estado !== 'PENDIENTE')
           .reduce((sum, a) => sum + (Number(a.valor) || 0), 0);
@@ -110,155 +108,172 @@ export default function Dashboard() {
   const statCards = [
     { 
       icon: Package, 
-      label: 'Productos disponibles', 
+      label: 'Productos', 
       value: stats.productos, 
       color: 'turquesa',
-      trend: null
+      sub: `${stats.productosBajoStock} con stock bajo`
     },
     { 
       icon: Scissors, 
       label: 'Arreglos pendientes', 
       value: stats.arreglosPendientes, 
       color: 'naranja',
-      trend: stats.arreglosMes > 0 ? `+${stats.arreglosMes} este mes` : null
+      sub: `${stats.arreglosMes} este mes`
     },
     { 
       icon: Users, 
-      label: 'Clientes registrados', 
+      label: 'Clientes', 
       value: stats.clientes, 
       color: 'morado',
-      trend: stats.clientesNuevosMes > 0 ? `+${stats.clientesNuevosMes} nuevos` : null
+      sub: `${stats.clientesNuevosMes} nuevos`
     },
     { 
       icon: CreditCard, 
       label: 'Deudas activas', 
       value: stats.deudasActivas, 
       color: 'amarillo',
-      trend: stats.deudaTotal > 0 ? formatMoney(stats.deudaTotal) + ' total' : null
+      sub: formatMoney(stats.deudaTotal)
     },
     { 
       icon: DollarSign, 
       label: 'Ingresos del mes', 
       value: formatMoney(stats.ingresosMes), 
       color: 'verde',
-      trend: null
-    },
-    { 
-      icon: AlertTriangle, 
-      label: 'Stock bajo', 
-      value: stats.productosBajoStock, 
-      color: 'rojo',
-      trend: stats.productosBajoStock > 0 ? 'Requiere atención' : 'Todo bien'
+      sub: 'Este mes'
     },
   ];
 
   return (
-    <div className="dashboard-page animate-fade-in">
-      {/* HEADER CON BRANDING */}
-      <div className="dashboard-header">
-        <div className="brand-showcase">
-          <div className="brand-logo-large">
-            <ScissorsLineDashed size={40} />
+    <div className="dashboard-pro animate-fade-in">
+      {/* HEADER */}
+      <div className="dash-header-pro">
+        <div className="dash-brand">
+          <div className="dash-brand-icon">
+            <ScissorsLineDashed size={32} />
           </div>
-          <div className="brand-text-large">
+          <div>
             <h1>Creaciones JAKD</h1>
-            <p>Sistema Administrativo</p>
+            <span>Panel de Control</span>
           </div>
         </div>
-        <div className="welcome-text">
-          <h2>¡Hola, Administrador!</h2>
-          <p>Este es el resumen de tu negocio hoy, {new Date().toLocaleDateString('es-CO', { weekday: 'long', day: 'numeric', month: 'long' })}</p>
+        <div className="dash-date">
+          <Clock size={16} />
+          <span>{new Date().toLocaleDateString('es-CO', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' })}</span>
         </div>
       </div>
 
+      {/* WELCOME */}
+      <div className="dash-welcome">
+        <h2>¡Hola, Administrador! 👋</h2>
+        <p>Este es el resumen de tu negocio hoy</p>
+      </div>
+
       {/* STATS GRID */}
-      <div className="stats-grid">
+      <div className="dash-stats-grid">
         {statCards.map((card, i) => {
           const Icon = card.icon;
           return (
-            <div key={i} className={`stat-card stat-${card.color}`}>
-              <div className="stat-card-header">
-                <div className={`stat-icon-bg ${card.color}`}>
+            <div key={i} className={`dash-stat-card dash-${card.color}`}>
+              <div className="dash-stat-top">
+                <div className="dash-stat-icon">
                   <Icon size={22} />
                 </div>
-                {card.trend && (
-                  <span className={`stat-trend ${card.color === 'rojo' ? 'trend-down' : 'trend-up'}`}>
-                    {card.trend}
-                  </span>
-                )}
+                <span className="dash-stat-label">{card.label}</span>
               </div>
-              <div className="stat-info">
-                <span className="stat-value">{loading ? '...' : card.value}</span>
-                <span className="stat-label">{card.label}</span>
+              <div className="dash-stat-value">
+                {loading ? '...' : card.value}
+              </div>
+              <div className="dash-stat-sub">
+                {card.sub}
               </div>
             </div>
           );
         })}
       </div>
 
-      {/* SECCIÓN INFERIOR: 2 COLUMNAS */}
-      <div className="dashboard-bottom">
-        {/* Alertas de stock */}
-        <div className="dash-card">
-          <div className="dash-card-header">
-            <AlertTriangle size={18} />
-            <h3>Alertas de inventario</h3>
+      {/* BOTTOM SECTION */}
+      <div className="dash-bottom-grid">
+        {/* ALERTAS */}
+        <div className="dash-card-pro">
+          <div className="dash-card-header-pro">
+            <div className="dash-card-title">
+              <AlertTriangle size={18} />
+              <h3>Alertas de inventario</h3>
+            </div>
+            {lowStock.length > 0 && (
+              <span className="dash-badge-alert">{lowStock.length} alertas</span>
+            )}
           </div>
-          {loading ? (
-            <p className="dash-loading">Cargando...</p>
-          ) : lowStock.length === 0 ? (
-            <div className="dash-empty">
-              <Package size={32} />
-              <p>Todo en orden. No hay productos con stock bajo.</p>
-            </div>
-          ) : (
-            <div className="dash-list">
-              {lowStock.map((p) => (
-                <div key={p.id} className="dash-list-item alert-item">
-                  <div className="dash-item-info">
-                    <span className="dash-item-name">{p.nombre}</span>
-                    <span className="dash-item-meta">{p.categoria} • Talla {p.talla || 'N/A'}</span>
+          
+          <div className="dash-card-body">
+            {loading ? (
+              <p className="dash-loading">Cargando...</p>
+            ) : lowStock.length === 0 ? (
+              <div className="dash-empty-pro">
+                <Package size={36} />
+                <p>Todo en orden. No hay productos con stock bajo.</p>
+              </div>
+            ) : (
+              <div className="dash-list-pro">
+                {lowStock.map((p) => (
+                  <div key={p.id} className="dash-list-item-pro alert">
+                    <div className="dash-item-left">
+                      <div className="dash-item-dot alert-dot" />
+                      <div className="dash-item-info">
+                        <span className="dash-item-name">{p.nombre}</span>
+                        <span className="dash-item-meta">{p.categoria} • {p.talla || 'Única'}</span>
+                      </div>
+                    </div>
+                    <span className="dash-item-badge">{p.cantidad} unid.</span>
                   </div>
-                  <div className="dash-item-badge">
-                    <span className="stock-alert">{p.cantidad} unidades</span>
-                  </div>
-                </div>
-              ))}
-            </div>
-          )}
+                ))}
+              </div>
+            )}
+          </div>
         </div>
 
-        {/* Últimos arreglos */}
-        <div className="dash-card">
-          <div className="dash-card-header">
-            <Scissors size={18} />
-            <h3>Últimos arreglos</h3>
+        {/* ARREGLOS RECIENTES */}
+        <div className="dash-card-pro">
+          <div className="dash-card-header-pro">
+            <div className="dash-card-title">
+              <Scissors size={18} />
+              <h3>Últimos arreglos</h3>
+            </div>
+            <button className="dash-see-all">
+              Ver todos <ChevronRight size={14} />
+            </button>
           </div>
-          {loading ? (
-            <p className="dash-loading">Cargando...</p>
-          ) : recentRepairs.length === 0 ? (
-            <div className="dash-empty">
-              <Scissors size={32} />
-              <p>No hay arreglos registrados aún.</p>
-            </div>
-          ) : (
-            <div className="dash-list">
-              {recentRepairs.map((a) => (
-                <div key={a.id} className="dash-list-item">
-                  <div className="dash-item-info">
-                    <span className="dash-item-name">{a.cliente}</span>
-                    <span className="dash-item-meta">{a.tipoArreglo} • {formatDate(a.fecha)}</span>
+          
+          <div className="dash-card-body">
+            {loading ? (
+              <p className="dash-loading">Cargando...</p>
+            ) : recentRepairs.length === 0 ? (
+              <div className="dash-empty-pro">
+                <Scissors size={36} />
+                <p>No hay arreglos registrados aún.</p>
+              </div>
+            ) : (
+              <div className="dash-list-pro">
+                {recentRepairs.map((a) => (
+                  <div key={a.id} className="dash-list-item-pro">
+                    <div className="dash-item-left">
+                      <div className={`dash-item-dot ${a.estado === 'PENDIENTE' ? 'pending-dot' : 'paid-dot'}`} />
+                      <div className="dash-item-info">
+                        <span className="dash-item-name">{a.cliente}</span>
+                        <span className="dash-item-meta">{a.tipoArreglo}</span>
+                      </div>
+                    </div>
+                    <div className="dash-item-right">
+                      <span className="dash-item-price">{formatMoney(a.valor)}</span>
+                      <span className={`dash-item-status ${a.estado === 'PENDIENTE' ? 'status-pending' : 'status-paid'}`}>
+                        {a.estado === 'PENDIENTE' ? 'Pendiente' : 'Pagado'}
+                      </span>
+                    </div>
                   </div>
-                  <div className="dash-item-badge">
-                    <span className={`status-badge ${a.estado === 'PENDIENTE' ? 'pending' : 'paid'}`}>
-                      {a.estado === 'PENDIENTE' ? 'Pendiente' : 'Pagado'}
-                    </span>
-                    <span className="dash-price">{formatMoney(a.valor)}</span>
-                  </div>
-                </div>
-              ))}
-            </div>
-          )}
+                ))}
+              </div>
+            )}
+          </div>
         </div>
       </div>
     </div>
