@@ -4,12 +4,8 @@ import {
   Scissors, 
   Users, 
   CreditCard, 
-  TrendingUp, 
   AlertTriangle,
   DollarSign,
-  Calendar,
-  ArrowUpRight,
-  ArrowDownRight,
   ScissorsLineDashed
 } from 'lucide-react';
 import { api } from '../../utils/api';
