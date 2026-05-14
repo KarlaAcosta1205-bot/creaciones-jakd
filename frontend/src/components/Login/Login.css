@@ -8,13 +8,14 @@
 }
 
 .login-card {
-  background: var(--blanco);
+  background: #0a0a0a;          /* Negro mate elegante */
   border-radius: 20px;
   padding: 48px 40px;
   width: 100%;
   max-width: 420px;
-  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.6);  /* Sombra más oscura */
   animation: fadeIn 0.8s ease-out;
+  border: 1px solid #1a1a1a;    /* Borde sutil gris oscuro */
 }
 
 .login-brand {
@@ -43,7 +44,7 @@
 
 .login-brand h1 {
   font-size: 1.1rem;
-  color: var(--gris-texto);
+  color: #a0a0a0;        /* Gris claro para "Bienvenido a" */
   font-weight: 400;
   margin-bottom: 4px;
 }
@@ -51,14 +52,14 @@
 .brand-name {
   font-size: 1.8rem;
   font-weight: 800;
-  color: var(--turquesa-oscuro);
+  color: #20c997;        /* Turquesa brillante para "Creaciones JAKD" */
   letter-spacing: 1px;
   margin-bottom: 4px;
 }
 
 .login-brand p {
   font-size: 0.9rem;
-  color: var(--gris-texto);
+  color: #808080;        /* Gris medio para "Sistema Administrativo" */
 }
 
 .login-form {
